@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaRegCirclePlay } from "react-icons/fa6";
-
+import { FaChevronCircleRight , FaChevronCircleLeft } from "react-icons/fa";
+import Cast from "./Cast";
+import SimilarMovies from "./SimilarMovies";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -12,6 +14,11 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
 
   const [getDetails, setgetDetails] = useState({});
   const [genres, setGenres] = useState([]);
+  const [productionCompanies, setProductionCompanies] = useState([]);
+  const [network, setNetwork] = useState([]);
+  const [seasons, setSeasons] = useState([]);
+  const [toggleCast, setToggleCast] = useState(true)
+
 
   const getShowDetails = async () => {
     try {
@@ -19,10 +26,17 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
       const data = await response.json();
       setgetDetails(data);
       setGenres(data.genres);
+      setProductionCompanies(data.production_companies);
+      setNetwork(data.networks);
+      setSeasons(data.seasons);
     } catch (error) {
       console.log({ msg: error.message });
     }
   };
+
+  const viewCast = () =>{
+    setToggleCast(!toggleCast);
+  }
 
   useEffect(() => {
     getShowDetails();
@@ -92,7 +106,11 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
 
               {/* overview section  */}
               <div className="py-7">
-                <p className="text-zinc-400">{getDetails.overview == "" ? "overview not available currently" : getDetails.overview}</p>
+                <p className="text-zinc-400">
+                  {getDetails.overview == ""
+                    ? "overview not available currently"
+                    : getDetails.overview}
+                </p>
               </div>
 
               {/* analytics part  */}
@@ -147,6 +165,94 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
           </div>
         </div>
       </div>
+
+      <main className="bg-black px-8 py-4">
+        <section className="pb-10">
+          <header className="flex items-end justify-between">
+            <h3 className="text-white text-xl border-b-2 pr-2">
+              Production and Network house
+            </h3>
+            <p className="text-sm text-amber-600">See more</p>
+          </header>
+
+          <div className="production flex gap-14 py-4">
+            {productionCompanies.map((Element, id) => {
+              return Element.logo_path ? (
+                <img
+                  key={id}
+                  className="h-8 grayscale invert mt-3"
+                  src={`https://image.tmdb.org/t/p/w500/${Element.logo_path}`}
+                  alt=""
+                />
+              ) : null;
+            })}
+            {network.map((Element, id) => {
+              return Element.logo_path ? (
+                <img
+                  key={id}
+                  className="h-8 grayscale invert mt-3"
+                  src={`https://image.tmdb.org/t/p/w500/${Element.logo_path}`}
+                  alt=""
+                />
+              ) : null;
+            })}
+          </div>
+        </section>
+
+        <section className="pb-10">
+          <header className="">
+            <h3 className="text-white text-xl pr-2 border-b-2 w-fit">Watch</h3>
+            <div className="flex flex-wrap gap-5 py-3">
+              {seasons.map((Element, id) => {
+                return (
+                  <div key={id} className="relative cursor-pointer">
+                    <img
+                      className="w-36"
+                      src={`https://image.tmdb.org/t/p/w500/${Element.poster_path}`}
+                      alt=""
+                    />
+                    <h3 className="text-white font-semibold text-lg mt-2 ">
+                      {`${Element.name}`.length > 12
+                        ? `${Element.name}`.substring(0, 12) + "..."
+                        : Element.name}
+                    </h3>
+                    <div className="flex items-center justify-between">
+                      <p className="text-white text-sm">No of Episodes</p>
+                      <p className="text-amber-300 text-sm font-semibold ">
+                        {Element.episode_count}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </header>
+        </section>
+        
+        {/* cast section  */}
+        <section className="pb-10" >
+          <header className="flex items-end justify-between">
+            <h3 className="text-white text-xl pr-2 border-b-2">Casts</h3>
+            <p onClick={viewCast} className="text-sm text-amber-600 cursor-pointer">{toggleCast ? "See more" : "See less"}</p>
+          </header>
+
+            <Cast toggleCast = {toggleCast} tvID={tvID} BASE_URL = {BASE_URL} API_KEY={API_KEY} />
+        </section>
+
+        {/* similar series  */}
+        <section className="pb-10" >
+        <header className="flex items-center justify-between">
+            <h3 className="text-white text-xl pr-2 border-b-2">Similar Shows</h3>
+            <div className="flex gap-4">
+            <p className=" text-amber-600 cursor-pointer"><FaChevronCircleLeft/></p>
+            <p className=" text-amber-600 cursor-pointer"><FaChevronCircleRight/></p>
+            </div>
+          </header>
+
+            <SimilarMovies tvId={tvID} BASE_URL = {BASE_URL} API_KEY={API_KEY} />
+
+        </section>
+      </main>
     </div>
   );
 };

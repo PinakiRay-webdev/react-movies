@@ -2,13 +2,13 @@ import { data } from 'autoprefixer';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-const SimilarMovies = ({ MovieId, BASE_URL, API_KEY }) => {
+const SimilarMovies = ({ tvId, BASE_URL, API_KEY }) => {
 
      const[movies , setMovies] =  useState([]);
 
      const getSimilar = async () =>{
         try {
-            const response = await fetch(`${BASE_URL}movie/${MovieId}/similar?api_key=${API_KEY}`)
+            const response = await fetch(`${BASE_URL}tv/${tvId}/similar?api_key=${API_KEY}`)
             const data = await response.json();
             setMovies(data.results);
         } catch (error) {
@@ -19,7 +19,7 @@ const SimilarMovies = ({ MovieId, BASE_URL, API_KEY }) => {
 
      useEffect(()=>{
         getSimilar();
-     },[MovieId]);
+     },[tvId]);
 
   return (
     <div className='similarMovies py-4 flex overflow-x-auto gap-5' >

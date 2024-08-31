@@ -1,13 +1,13 @@
 import { data } from "autoprefixer";
 import React, { useEffect, useState , } from "react";
 
-const Cast = ({ MovieId, BASE_URL, API_KEY , toggleCast , category = 'movie' }) => {
+const Cast = ({ tvID ,  BASE_URL, API_KEY , toggleCast }) => {
   const [cast, setCast] = useState([]);
 
   const getCast = async () => {
     try {
       const response = await fetch(
-        `${BASE_URL}${category}/${MovieId}/credits?api_key=${API_KEY}`
+        `${BASE_URL}tv/${tvID}/credits?api_key=${API_KEY}`
       );
       const data = await response.json();
       setCast(data.cast);
@@ -18,7 +18,7 @@ const Cast = ({ MovieId, BASE_URL, API_KEY , toggleCast , category = 'movie' }) 
 
   useEffect(() => {
     getCast();
-  }, [MovieId]);
+  }, [tvID]);
 
   let number = toggleCast ? 8 : data.length;
 

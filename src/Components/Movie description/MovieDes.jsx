@@ -6,7 +6,7 @@ import { FaRegCirclePlay } from "react-icons/fa6";
 
 import { FaChevronCircleRight , FaChevronCircleLeft } from "react-icons/fa";
 
-import Cast from "./Cast";
+import Cast from "./Cast"
 import SimilarMovies from "./SimilarMovies";
 
 const MovieDes = ({ BASE_URL, API_KEY }) => {
