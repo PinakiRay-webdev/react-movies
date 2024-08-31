@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  scroll-behavior: smooth;
+}
+.BannerContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.BannerContainer {
+  height: 100vh;
+}
+
+.bannerData {
+  background: linear-gradient(
+    67deg,
+    rgba(0, 0, 0, 0.707) 0%,
+    rgba(0, 0, 0, 0.0033263305322128733) 100%
+  );
+  height: 100vh;
+}
+
+.line-clamp {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; /* Ensure text wraps properly */
+  max-height: 12rem; /* Set max height to constrain text within the div */
+  line-height: 1.5rem; /* Set a line height for proper spacing */
+}
+
+.latestMovies::-webkit-scrollbar,
+.popularMovies::-webkit-scrollbar,
+.topRatedMovies::-webkit-scrollbar,
+.popularCast::-webkit-scrollbar,
+.popularShows::-webkit-scrollbar,
+.topRatedShows::-webkit-scrollbar,
+.airingToday::-webkit-scrollbar,
+.similarMovies::-webkit-scrollbar {
+  display: none;
+}
+
+.g-box {
+  min-width: 15vw;
+  flex: 1 0 11vw;
+}
+
+.detail-section
+{
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.94) 40%, rgba(0,0,0,0.0033263305322128733) 100%);
+}
+
+/* .production{
+  position: relative;
+  display: inline-block;
+}
+
+.production::after
+{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+
+.production img{
+    display: block;
+} */
