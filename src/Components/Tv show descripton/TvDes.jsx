@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaRegCirclePlay } from "react-icons/fa6";
-import { FaChevronCircleRight , FaChevronCircleLeft } from "react-icons/fa";
+import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
 import Cast from "./Cast";
 import SimilarMovies from "./SimilarMovies";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -17,8 +17,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
   const [productionCompanies, setProductionCompanies] = useState([]);
   const [network, setNetwork] = useState([]);
   const [seasons, setSeasons] = useState([]);
-  const [toggleCast, setToggleCast] = useState(true)
-
+  const [toggleCast, setToggleCast] = useState(true);
 
   const getShowDetails = async () => {
     try {
@@ -34,16 +33,20 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
     }
   };
 
-  const viewCast = () =>{
+  const viewCast = () => {
     setToggleCast(!toggleCast);
-  }
+  };
 
   useEffect(() => {
     getShowDetails();
   }, [tvID]);
 
+  const posterImg = getDetails.poster_path;
+
+
   return (
     <div className="w-[100vw] pl-[10vw] h-screen overflow-x-hidden">
+      {/* hero section  */}
       <div className="hero-section h-screen relative">
         {/* backdrop image path  */}
         <div className="background-section h-screen absolute inset-0">
@@ -199,16 +202,37 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
           </div>
         </section>
 
+        {/* seasons section  */}
+
         <section className="pb-10">
           <header className="">
             <h3 className="text-white text-xl pr-2 border-b-2 w-fit">Watch</h3>
             <div className="flex flex-wrap gap-5 py-3">
               {seasons.map((Element, id) => {
-                return (
+                return Element.poster_path ? (
                   <div key={id} className="relative cursor-pointer">
                     <img
-                      className="w-36"
+                      className="w-36 text-white"
                       src={`https://image.tmdb.org/t/p/w500/${Element.poster_path}`}
+                      alt=""
+                    />
+                    <h3 className="text-white font-semibold text-lg mt-2 ">
+                      {`${Element.name}`.length > 12
+                        ? `${Element.name}`.substring(0, 12) + "..."
+                        : Element.name}
+                    </h3>
+                    <div className="flex items-center justify-between">
+                      <p className="text-white text-sm">No of Episodes</p>
+                      <p className="text-amber-300 text-sm font-semibold ">
+                        {Element.episode_count}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={id} className="relative cursor-pointer">
+                    <img
+                      className="w-36 text-white"
+                      src={`https://image.tmdb.org/t/p/w500/${posterImg}`}
                       alt=""
                     />
                     <h3 className="text-white font-semibold text-lg mt-2 ">
@@ -228,29 +252,44 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
             </div>
           </header>
         </section>
-        
+
         {/* cast section  */}
-        <section className="pb-10" >
+        <section className="pb-10">
           <header className="flex items-end justify-between">
             <h3 className="text-white text-xl pr-2 border-b-2">Casts</h3>
-            <p onClick={viewCast} className="text-sm text-amber-600 cursor-pointer">{toggleCast ? "See more" : "See less"}</p>
+            <p
+              onClick={viewCast}
+              className="text-sm text-amber-600 cursor-pointer"
+            >
+              {toggleCast ? "See more" : "See less"}
+            </p>
           </header>
 
-            <Cast toggleCast = {toggleCast} tvID={tvID} BASE_URL = {BASE_URL} API_KEY={API_KEY} />
+          <Cast
+            toggleCast={toggleCast}
+            tvID={tvID}
+            BASE_URL={BASE_URL}
+            API_KEY={API_KEY}
+          />
         </section>
 
         {/* similar series  */}
-        <section className="pb-10" >
-        <header className="flex items-center justify-between">
-            <h3 className="text-white text-xl pr-2 border-b-2">Similar Shows</h3>
+        <section className="pb-10">
+          <header className="flex items-center justify-between">
+            <h3 className="text-white text-xl pr-2 border-b-2">
+              Similar Shows
+            </h3>
             <div className="flex gap-4">
-            <p className=" text-amber-600 cursor-pointer"><FaChevronCircleLeft/></p>
-            <p className=" text-amber-600 cursor-pointer"><FaChevronCircleRight/></p>
+              <p className=" text-amber-600 cursor-pointer">
+                <FaChevronCircleLeft />
+              </p>
+              <p className=" text-amber-600 cursor-pointer">
+                <FaChevronCircleRight />
+              </p>
             </div>
           </header>
 
-            <SimilarMovies tvId={tvID} BASE_URL = {BASE_URL} API_KEY={API_KEY} />
-
+          <SimilarMovies tvId={tvID} BASE_URL={BASE_URL} API_KEY={API_KEY} />
         </section>
       </main>
     </div>
