@@ -6,6 +6,7 @@ import Cast from "./Cast";
 import SimilarMovies from "./SimilarMovies";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import Episodes from "./Episodes";
 
 const TvDes = ({ BASE_URL, API_KEY }) => {
   const params = useParams();
@@ -178,7 +179,8 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
       {/* main content section  */}
 
       <main className="bg-black px-8 py-4">
-
+      
+      {/* seactions section  */}
       <section className="pb-10">
           <header className="">
             <h3 className="text-white text-xl pr-2 border-b-2 w-fit">
@@ -187,7 +189,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
             <div className="flex flex-wrap gap-5 py-3">
               {seasons.map((Element, id) => {
                 return Element.poster_path ? (
-                  <div key={id} className="relative cursor-pointer">
+                  <div onClick={() => setSeasonNumber(Element.season_number)} key={id} className="relative cursor-pointer">
                     <img
                       className="w-36 text-white"
                       src={`https://image.tmdb.org/t/p/w500/${Element.poster_path}`}
@@ -255,9 +257,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
         {/* Conditional Rendering of Sections */}
         <div>
         {activeSection === "episodes" && (
-          <section className="bg-white max-w-screen-lg mx-auto py-4 border">
-            This is the home section
-          </section>
+          <Episodes tvId={tvID} BASE_URL = {BASE_URL} API_KEY={API_KEY} seasonNumber = {seasonNumber} />
         )}
         
         {/* production house  */}
@@ -314,10 +314,6 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
       </main>
 
       <main className="bg-black px-8 py-4">
-
-
-        {/* seasons section  */}
-
 
         {/* similar series  */}
         <section className="pb-10">
