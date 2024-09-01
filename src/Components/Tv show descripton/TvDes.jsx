@@ -18,6 +18,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
   const [network, setNetwork] = useState([]);
   const [seasons, setSeasons] = useState([]);
   const [toggleCast, setToggleCast] = useState(true);
+  const [seasonNumber, setSeasonNumber] = useState(0);
 
   const getShowDetails = async () => {
     try {
@@ -206,7 +207,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
 
         <section className="pb-10">
           <header className="">
-            <h3 className="text-white text-xl pr-2 border-b-2 w-fit">Watch</h3>
+            <h3 className="text-white text-xl pr-2 border-b-2 w-fit">Seasons</h3>
             <div className="flex flex-wrap gap-5 py-3">
               {seasons.map((Element, id) => {
                 return Element.poster_path ? (
@@ -250,6 +251,12 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
                 );
               })}
             </div>
+          </header>
+        </section>
+
+        <section className="pb-10">
+          <header>
+            <h3 className="text-white text-xl pr-2 border-b-2 w-fit">Episodes</h3>
           </header>
         </section>
 
