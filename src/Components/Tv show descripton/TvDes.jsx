@@ -19,6 +19,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
   const [seasons, setSeasons] = useState([]);
   const [toggleCast, setToggleCast] = useState(true);
   const [seasonNumber, setSeasonNumber] = useState(0);
+  const [activeSection, setActiveSection] = useState('episodes');
 
   const getShowDetails = async () => {
     try {
@@ -43,6 +44,10 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
   }, [tvID]);
 
   const posterImg = getDetails.poster_path;
+
+  const handleNavClick = (section) => {
+    setActiveSection(section);
+  };
 
 
   return (
@@ -170,44 +175,15 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
         </div>
       </div>
 
+      {/* main content section  */}
+
       <main className="bg-black px-8 py-4">
-        <section className="pb-10">
-          <header className="flex items-end justify-between">
-            <h3 className="text-white text-xl border-b-2 pr-2">
-              Production and Network house
-            </h3>
-            <p className="text-sm text-amber-600">See more</p>
-          </header>
 
-          <div className="production flex gap-14 py-4">
-            {productionCompanies.map((Element, id) => {
-              return Element.logo_path ? (
-                <img
-                  key={id}
-                  className="h-8 grayscale invert mt-3"
-                  src={`https://image.tmdb.org/t/p/w500/${Element.logo_path}`}
-                  alt=""
-                />
-              ) : null;
-            })}
-            {network.map((Element, id) => {
-              return Element.logo_path ? (
-                <img
-                  key={id}
-                  className="h-8 grayscale invert mt-3"
-                  src={`https://image.tmdb.org/t/p/w500/${Element.logo_path}`}
-                  alt=""
-                />
-              ) : null;
-            })}
-          </div>
-        </section>
-
-        {/* seasons section  */}
-
-        <section className="pb-10">
+      <section className="pb-10">
           <header className="">
-            <h3 className="text-white text-xl pr-2 border-b-2 w-fit">Seasons</h3>
+            <h3 className="text-white text-xl pr-2 border-b-2 w-fit">
+              Seasons
+            </h3>
             <div className="flex flex-wrap gap-5 py-3">
               {seasons.map((Element, id) => {
                 return Element.poster_path ? (
@@ -254,31 +230,94 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
           </header>
         </section>
 
-        <section className="pb-10">
-          <header>
-            <h3 className="text-white text-xl pr-2 border-b-2 w-fit">Episodes</h3>
-          </header>
-        </section>
+        {/* Navigation Bar */}
+        <nav className="flex justify-around text-white text-lg">
+          <p
+            className="navbtns cursor-pointer"
+            onClick={() => handleNavClick("episodes")}
+          >
+            Episodes
+          </p>
+          <p
+            className="navbtns cursor-pointer"
+            onClick={() => handleNavClick("production")}
+          >
+            Production & Networks
+          </p>
+          <p
+            className="navbtns cursor-pointer"
+            onClick={() => handleNavClick("cast")}
+          >
+            Cast
+          </p>
+        </nav>
+
+        {/* Conditional Rendering of Sections */}
+        <div>
+        {activeSection === "episodes" && (
+          <section className="bg-white max-w-screen-lg mx-auto py-4 border">
+            This is the home section
+          </section>
+        )}
+        
+        {/* production house  */}
+        {activeSection === "production" && (
+                  <section className="pb-10">        
+                  <div className="production flex gap-14 py-4">
+                    {productionCompanies.map((Element, id) => {
+                      return Element.logo_path ? (
+                        <img
+                          key={id}
+                          className="h-8 grayscale invert mt-3"
+                          src={`https://image.tmdb.org/t/p/w500/${Element.logo_path}`}
+                          alt=""
+                        />
+                      ) : null;
+                    })}
+                    {network.map((Element, id) => {
+                      return Element.logo_path ? (
+                        <img
+                          key={id}
+                          className="h-8 grayscale invert mt-3"
+                          src={`https://image.tmdb.org/t/p/w500/${Element.logo_path}`}
+                          alt=""
+                        />
+                      ) : null;
+                    })}
+                  </div>
+                </section>
+        )}
 
         {/* cast section  */}
-        <section className="pb-10">
-          <header className="flex items-end justify-between">
-            <h3 className="text-white text-xl pr-2 border-b-2">Casts</h3>
-            <p
-              onClick={viewCast}
-              className="text-sm text-amber-600 cursor-pointer"
-            >
-              {toggleCast ? "See more" : "See less"}
-            </p>
-          </header>
+        {activeSection === "cast" && (
+                  <section className="pb-10">
+                  <header className="flex items-end justify-between">
+                    <h3 className="text-white text-xl pr-2 border-b-2">Casts</h3>
+                    <p
+                      onClick={viewCast}
+                      className="text-sm text-amber-600 cursor-pointer"
+                    >
+                      {toggleCast ? "See more" : "See less"}
+                    </p>
+                  </header>
+        
+                  <Cast
+                    toggleCast={toggleCast}
+                    tvID={tvID}
+                    BASE_URL={BASE_URL}
+                    API_KEY={API_KEY}
+                  />
+                </section>
+        )}
+        </div>
 
-          <Cast
-            toggleCast={toggleCast}
-            tvID={tvID}
-            BASE_URL={BASE_URL}
-            API_KEY={API_KEY}
-          />
-        </section>
+      </main>
+
+      <main className="bg-black px-8 py-4">
+
+
+        {/* seasons section  */}
+
 
         {/* similar series  */}
         <section className="pb-10">
