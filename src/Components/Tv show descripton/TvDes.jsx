@@ -136,7 +136,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
                         rotation: 0.0, // Starts at 12 o'clock
                         strokeLinecap: "butt", // Round ends of the path
                         textSize: "32px",
-                        pathTransitionDuration: 0.5, // Animation duration
+                        pathTransitionDuration: 3, // Animation duration
                         pathColor: "#bba815", // Color of the progress path
                         textColor: "#bba815", // Color of the text inside the circle
                         trailColor: "white", // Color of the background trail

@@ -1,4 +1,3 @@
-import { data } from 'autoprefixer';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -24,7 +23,7 @@ const SimilarMovies = ({ MovieId, BASE_URL, API_KEY }) => {
   return (
     <div className='similarMovies py-4 flex overflow-x-auto gap-5' >
       {movies.map((Element , id)=>{
-        return(
+        return Element.poster_path ? (
           <Link to={`${Element.id}`} >          
           <img
           key={id}
@@ -33,7 +32,7 @@ const SimilarMovies = ({ MovieId, BASE_URL, API_KEY }) => {
           alt=""
         />
           </Link>
-        )
+        ) : null
       })}
     </div>
   )

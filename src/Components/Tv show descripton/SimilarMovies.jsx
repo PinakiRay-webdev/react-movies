@@ -24,7 +24,7 @@ const SimilarMovies = ({ tvId, BASE_URL, API_KEY }) => {
   return (
     <div className='similarMovies py-4 flex overflow-x-auto gap-5' >
       {movies.map((Element , id)=>{
-        return(
+        return Element.poster_path !==null ?  (
           <Link to={`${Element.id}`} >          
           <img
           key={id}
@@ -33,7 +33,7 @@ const SimilarMovies = ({ tvId, BASE_URL, API_KEY }) => {
           alt=""
         />
           </Link>
-        )
+        ) : null;
       })}
     </div>
   )
