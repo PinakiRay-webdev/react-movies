@@ -19,7 +19,7 @@ const TvDes = ({ BASE_URL, API_KEY }) => {
   const [network, setNetwork] = useState([]);
   const [seasons, setSeasons] = useState([]);
   const [toggleCast, setToggleCast] = useState(true);
-  const [seasonNumber, setSeasonNumber] = useState(0);
+  const [seasonNumber, setSeasonNumber] = useState(0 || 1);
   const [activeSection, setActiveSection] = useState('episodes');
 
   const getShowDetails = async () => {

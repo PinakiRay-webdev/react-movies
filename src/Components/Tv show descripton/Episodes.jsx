@@ -20,7 +20,7 @@ const Episodes = ({ seasonNumber, BASE_URL, API_KEY, tvId }) => {
 
   return (
     <div className="px-8 py-4">
-      {tvEpisodes.map((Element, id) => {
+      {tvEpisodes ? (tvEpisodes.map((Element, id) => {
         return (
           <div key={id} className="my-2 py-2 px-1 bg-zinc-900 rounded-md flex gap-4">
             <img
@@ -64,7 +64,7 @@ const Episodes = ({ seasonNumber, BASE_URL, API_KEY, tvId }) => {
             </div>
           </div>
         );
-      })}
+      })) : (<p className="text-amber-400" >Unable to watch right now try again later</p>)}
     </div>
   );
 };
