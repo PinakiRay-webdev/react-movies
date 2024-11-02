@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link , useNavigate  } from 'react-router-dom';
 
 const SimilarMovies = ({ MovieId, BASE_URL, API_KEY }) => {
 
@@ -16,6 +16,12 @@ const SimilarMovies = ({ MovieId, BASE_URL, API_KEY }) => {
         }
      }
 
+     const navigate = useNavigate();
+
+     const handleNaviagation = (id) =>{
+      navigate(`/movie/${id}`)
+     }
+
      useEffect(()=>{
         getSimilar();
      },[MovieId]);
@@ -23,15 +29,14 @@ const SimilarMovies = ({ MovieId, BASE_URL, API_KEY }) => {
   return (
     <div className='similarMovies py-4 flex overflow-x-auto gap-5' >
       {movies.map((Element , id)=>{
-        return Element.poster_path ? (
-          <Link to={`${Element.id}`} >          
+        return Element.poster_path ? (         
           <img
           key={id}
+          onClick={() => handleNaviagation(Element.id)}
           className="min-w-28 rounded-md cursor-pointer"
           src={`https://image.tmdb.org/t/p/w500/${Element.poster_path}`}
           alt=""
         />
-          </Link>
         ) : null
       })}
     </div>
